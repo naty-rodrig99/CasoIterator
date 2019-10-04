@@ -78,7 +78,7 @@ public class Nodo implements IContainer<Nodo>{
     
     @Override                
     public String toString() {                    
-        return "Nodo " + "dato=" + dato + ", punteros=" + punteros;                
+        return "Nodo(" + "dato=" + dato + ", punteros=" + punteros+ ")";                
     }                
 
     public int getDato() {
