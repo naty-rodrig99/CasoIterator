@@ -7,100 +7,55 @@ package casoiterator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  *
  * @author naty9
  */
-public class Nodo implements IContainer<Nodo>{
-    private int dato;            
-    private int punteros;
-    private List<Nodo> subordinates;  
-    
-    public Nodo(int dato,int puntero, Nodo... subordinates) {
+public class Nodo {
+    private int dato;
+    private List<Nodo> anteriores;  
+    private List<Nodo> posteriores; 
+
+    public Nodo(int dato) {
         this.dato = dato;  
-        this.punteros = puntero;
-        this.subordinates = Arrays.asList(subordinates);                
-    }                            
+        this.anteriores = new ArrayList<>();    
+        this.posteriores = new ArrayList<>(); 
+    } 
+
+    public void setAnteriores(List<Nodo> anteriores) {                    
+        this.anteriores = anteriores;                
+    }     
     
-    @Override                
-    public IIterator<Nodo> createIterator() {
-        return new TreeNodoIterator();
-    }                            
+    public List<Nodo> getAnteriores() {
+        return anteriores;
+    }
     
-    private class TreeNodoIterator implements IIterator<Nodo> {
-        private LinkedList<Nodo> list = new LinkedList<Nodo>();                    
-        private int index = 0;   
-        
-        public TreeNodoIterator() {                        
-            addRecursive(Nodo.this);                    
-        }
-        
-        public void addRecursive(Nodo nodo) {
-            list.add(nodo);                        
-            
-            if (nodo.getSubordinates() != null) {                            
-                for (Nodo subordinate : nodo.getSubordinates()) {
-                    addRecursive(subordinate);                            
-                }                        
-            }                    
-        }                                
-        
-        @Override                    
-        public boolean hasNext() {                        
-            if (list.isEmpty()) {                            
-                return false;                        
-            }
-            return index < list.size();
-        }
-        
-        @Override                    
-        public Nodo next() {                        
-            if (!hasNext()) {                            
-                throw new RuntimeException("No hay más elementos");                        
-            }
-            return list.get(index++);                    
-        }                
-    }                            
-    
-    public void setSubordinates(List<Nodo> subordinates) {                    
-        this.subordinates = subordinates;                
-    }                            
-    
-    public void addSubordinate(Nodo subordinate) {                    
-        if (subordinate == null) {                        
-            subordinates = new ArrayList<>();                    
+    public void addAnteriores(Nodo anterior) {                    
+        if (anterior == null) {                        
+            anteriores = new ArrayList<>();                    
         }                    
-        subordinates.add(subordinate);                
-    }                            
+        anteriores.add(anterior);                
+    }   
     
-    @Override                
+    public void setPosteriores(List<Nodo> posteriores) {                    
+        this.posteriores = posteriores;                
+    }     
+    
+    public List<Nodo> getPosteriores() {
+        return posteriores;
+    }
+    
+    public void addPosteriores(Nodo posterior) {                    
+        if (posterior == null) {                        
+            posteriores = new ArrayList<>();                    
+        }                    
+        posteriores.add(posterior);                
+    }   
+                  
     public String toString() {                    
-        return "Nodo(" + "dato=" + dato + ", punteros=" + punteros+ ")";                
+        return "Nodo(" + "dato=" + dato + ")";                
     }                
 
-    public int getDato() {
-        return dato;
-    }
-
-    public void setDato(int dato) {
-        this.dato = dato;
-    }
-    
-    public int getPunteros() {
-        return punteros;
-    }
-
-    public void setPunteros(int punteros) {
-        this.punteros = punteros;
-    }
-
-
-    public List<Nodo> getSubordinates() {
-        return subordinates;
-    }
-    
-    
 }
